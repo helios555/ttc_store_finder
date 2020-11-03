@@ -36,7 +36,7 @@ for item in item_list:
 
 # Factor at which price difference the listing will be issued to the user
 # in percent(%), e.g. if item is 1000 avg then issue at 200 at factor 0.2
-alarm_factor_price = 0.5
+alarm_factor_price = 0.8
 
 # Factor of how likely the listing is still active in minutes
 # Listings older the factor will be ignored
@@ -49,7 +49,7 @@ print(item_price)
 url_p1 = "https://eu.tamrieltradecentre.com/pc/Trade/SearchResult?SearchType=Sell&ItemID="
 url_p2 = "&ItemCategory1ID=&ItemTraitID=&ItemQualityID=&IsChampionPoint=false&LevelMin=&LevelMax=&MasterWritVoucherMin=&MasterWritVoucherMax=&AmountMin=&AmountMax=&PriceMin=&PriceMax=&SortBy=Price&Order=asc"
 
-price_regex = re.compile(r'\d+,\d+.\d+(?= *X)')
+price_regex = re.compile(r'\d*,*\d*\.*\d+(?= *X)')
 
 while(True):
     for item in item_list:
@@ -60,9 +60,10 @@ while(True):
         #print("Updating listings...")
         res = requests.get(url)
         soup = BeautifulSoup(res.text, "html.parser")
-
+        #print(item)
         # Extract infos from all listings
         for entry in soup.find_all('tr', 'cursor-pointer'):
+            #print(entry)
             price = None
             last_seen = None
             location = None 

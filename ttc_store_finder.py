@@ -1,8 +1,14 @@
+# TODO: 
+# option to exlcude traders in dlc areas
+# price factor for individual items
+# exception handling
+
 import re
 import requests
 from bs4 import BeautifulSoup
 import time
 import os.path
+import random
 
 price_table = open(os.path.expanduser('~')+"\\Documents\\Elder Scrolls Online\\live\\AddOns\\TamrielTradeCentre\\PriceTable.lua", "r").read()
 ItemLOT = open(os.path.expanduser('~')+"\\Documents\\Elder Scrolls Online\\live\\AddOns\\TamrielTradeCentre\\ItemLookUpTable_EN.lua", "r").read()
@@ -54,7 +60,7 @@ price_regex = re.compile(r'\d*,*\d*\.*\d+(?= *X)')
 while(True):
     for item in item_list:
         # Dont remove or you will send unlimited requests to the server
-        time.sleep(5)
+        time.sleep(60+random.randint(0, 5))
         # Create URL for get
         url = url_p1+item_price[item][0]+'&ItemNamePattern='+item+url_p2
         #print("Updating listings...")
